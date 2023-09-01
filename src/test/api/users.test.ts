@@ -1,9 +1,9 @@
 import axios from 'axios';
 import fetchApiData from '../../api/users';
 import sinon from 'sinon';
-import chai, { expect, should } from 'chai';
-
-chai.should();
+import chai, { expect } from 'chai';
+import sinonChai from 'sinon-chai';
+chai.use(sinonChai);
 
 //defining response for stubs and spies
 const responseData = [{ id: 1, title: 'Test Post' }];
@@ -22,9 +22,9 @@ describe('fetchApiData Stubs & Spies', () => {
         sinon.stub(axios, 'get').rejects(new Error(errorMessage));
 
         const response = await fetchApiData();
-        response.should.be.an('error');
+        expect(response).to.be.an('error');
         if (response instanceof Error) {
-            response.message.should.equal(errorMessage);
+            expect(response.message).to.deep.equal(errorMessage);
         }
     });
 
@@ -40,7 +40,7 @@ describe('fetchApiData Stubs & Spies', () => {
 
         await fetchApiData();
 
-        sinon.assert.calledWith(axiosGetStub, process.env.API_ENDPOINT);
+        expect(axiosGetStub).to.have.be.calledOnceWith(process.env.API_ENDPOINT);
     });
 
     it('calls axios.get with correct URL using spyOn', async () => {
@@ -48,7 +48,7 @@ describe('fetchApiData Stubs & Spies', () => {
 
         await fetchApiData();
 
-        sinon.assert.calledWith(axiosGetSpy, process.env.API_ENDPOINT);
+        expect(axiosGetSpy).to.have.been.calledOnceWith(process.env.API_ENDPOINT);
     });
 
     it('calls console.log with fetched data', async () => {
@@ -58,6 +58,6 @@ describe('fetchApiData Stubs & Spies', () => {
 
         await fetchApiData();
 
-        sinon.assert.calledWith(consoleLogSpy, responseData);
+        expect(consoleLogSpy).to.have.been.calledOnceWith(responseData);
     });
 });

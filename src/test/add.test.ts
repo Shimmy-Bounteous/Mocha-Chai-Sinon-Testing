@@ -1,11 +1,9 @@
 import add from '../add';
-import chai, { should, expect } from 'chai';
-
-chai.should();
+import { expect } from 'chai';
 
 describe('add function', () => {
   it('Sum should be equal to 3', () => {
-    add(1, 2).should.equal(3);
+    expect(add(1, 2)).to.equal(3);
   });
 });
 
