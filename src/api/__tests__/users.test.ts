@@ -1,5 +1,5 @@
 import axios from 'axios';
-import fetchApiData from '../../api/users';
+import fetchApiData from '../users';
 import sinon from 'sinon';
 import chai, { expect } from 'chai';
 import sinonChai from 'sinon-chai';
