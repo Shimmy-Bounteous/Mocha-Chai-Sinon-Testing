@@ -12,6 +12,11 @@ const response = { data: responseData };
 // Creating Stubs
 describe('fetchApiData Stubs & Spies', () => {
 
+    // Suppress all console messages
+    before(() => {
+        console.log = () => { };
+    });
+
     // reset all mocked functions' states after each test
     afterEach(() => {
         sinon.restore();
@@ -19,7 +24,13 @@ describe('fetchApiData Stubs & Spies', () => {
 
     it('handles API error', async () => {
         const errorMessage = 'Network Error';
-        sinon.stub(axios, 'get').rejects(new Error(errorMessage));
+        const axiosGetStub = sinon.stub(axios, 'get');
+        
+        // -- USING .rejects()
+        // axiosGetStub.rejects(new Error(errorMessage));
+
+        // --USING .callsFake()
+        axiosGetStub.callsFake(async () => { throw new Error(errorMessage); });
 
         const response = await fetchApiData();
         expect(response).to.be.an('error');

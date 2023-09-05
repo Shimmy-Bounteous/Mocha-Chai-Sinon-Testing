@@ -5,7 +5,7 @@
   "main": "./dist/index.js",
   "scripts": {
     "start": "tsc && node ./dist/index.js",
-    "test": "mocha ./dist/test --recursive --silent"
+    "test": "mocha ./dist/__tests__ ./dist/**/__tests__ 2>/dev/null"
   },
   "author": "Shimmy Roy",
   "license": "ISC",
